@@ -1,6 +1,6 @@
 {
   "name": "counter",
-  "homepage": "aliaksandr-batskalevich.github.io/3-react-counter",
+  "homepage": "https://aliaksandr-batskalevich.github.io/3-react-counter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
