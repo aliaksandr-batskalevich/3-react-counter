@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/aliaksandr-batskalevich.github.io/3-react-counter/static/css/main.f8d2c288.css",
+    "main.js": "/aliaksandr-batskalevich.github.io/3-react-counter/static/js/main.68d4d84f.js",
+    "static/js/787.e458d2a5.chunk.js": "/aliaksandr-batskalevich.github.io/3-react-counter/static/js/787.e458d2a5.chunk.js",
+    "index.html": "/aliaksandr-batskalevich.github.io/3-react-counter/index.html",
+    "main.f8d2c288.css.map": "/aliaksandr-batskalevich.github.io/3-react-counter/static/css/main.f8d2c288.css.map",
+    "main.68d4d84f.js.map": "/aliaksandr-batskalevich.github.io/3-react-counter/static/js/main.68d4d84f.js.map",
+    "787.e458d2a5.chunk.js.map": "/aliaksandr-batskalevich.github.io/3-react-counter/static/js/787.e458d2a5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f8d2c288.css",
+    "static/js/main.68d4d84f.js"
+  ]
+}
