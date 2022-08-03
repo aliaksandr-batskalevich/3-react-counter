@@ -1,0 +1,86 @@
+.mainWrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
+
+.counterOutWrapper {
+    padding: 10px;
+    background-color: #172031;
+    text-align: center;
+}
+
+.counterInWrapper {
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    border: #0a97f3 solid 2px;
+    border-radius: 5px;
+}
+
+.displayWrapper {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 130px;
+    text-align: center;
+    border: #0a97f3 solid 2px;
+    border-radius: 5px;
+}
+
+.displayWrapperForSettings {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.display {
+    color: white;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.displayMaxValue {
+    color: red;
+    opacity: 0.5;
+}
+
+.messageOnDisplay {
+    color: red;
+    font-size: 22px;
+}
+
+.buttonWrapper {
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border: #0a97f3 solid 2px;
+    border-radius: 5px;
+}
+
+.buttonWrapperForSettings {
+    justify-content: center;
+}
+
+.maxValueWrapper {
+
+}
+
+.startValueWrapper {
+
+}
+
+.legend {
+    margin-right: 15px;
+    color: #0a97f3;
+    font-size: 26px;
+}
+
+input {
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    text-align: center;
+}
