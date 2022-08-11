@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import s from './Counter.module.css'
 import {ButtonForCounter} from "./ButtonForCounter";
 import {modeType, rulesType} from "../App";
@@ -7,24 +7,27 @@ type CounterPropsType = {
     mode: modeType
     rules: rulesType
     numOfDisplay: number
+    error: boolean
     incrementCallBack: () => void
     resetCallBack: () => void
 }
 
-export const Counter: React.FC<CounterPropsType> = ({rules, mode, numOfDisplay, incrementCallBack, resetCallBack}) => {
+export const Counter: React.FC<CounterPropsType> = ({
+                                                        rules,
+                                                        mode,
+                                                        numOfDisplay,
+                                                        error,
+                                                        incrementCallBack,
+                                                        resetCallBack
+                                                    }) => {
 
-    // useEffect(() => {
-    //     let dataFromLocalStorage: string | null = localStorage.getItem("numOfCounter");
-    //     if (dataFromLocalStorage) {
-    //         setNumOfDisplay(JSON.parse(dataFromLocalStorage));
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     localStorage.setItem('numOfCounter', JSON.stringify(numOfDisplay))
-    // }, [numOfDisplay]);
-
-    const styleForDisplay = numOfDisplay >= rules.maxValue && mode === "counter" ? `${s.display} ${s.displayMaxValue}` : numOfDisplay < rules.maxValue && mode === "counter" ? s.display : `${s.display} ${s.messageOnDisplay}`;
+    const styleForDisplay = mode === "counter" && numOfDisplay >= rules.maxValue
+        ? `${s.display} ${s.displayMaxValue}`
+        : mode === "counter" && numOfDisplay < rules.maxValue
+            ? s.display
+            : mode === "settings" && error
+                ? `${s.display} ${s.messageOnDisplay} ${s.error}`
+                : `${s.display} ${s.messageOnDisplay}`;
 
     return (
         <div className={s.counterOutWrapper}>
@@ -33,7 +36,9 @@ export const Counter: React.FC<CounterPropsType> = ({rules, mode, numOfDisplay, 
                     <div className={styleForDisplay}>
                         {mode === "counter"
                             ? numOfDisplay
-                            : 'set your settings.'}
+                            : error
+                                ? 'incorrect settings!'
+                                : 'set your settings.'}
                     </div>
                 </div>
                 <div className={s.buttonWrapper}>
@@ -45,7 +50,7 @@ export const Counter: React.FC<CounterPropsType> = ({rules, mode, numOfDisplay, 
                     <ButtonForCounter
                         title={'RESET'}
                         callBack={resetCallBack}
-                        disabled={numOfDisplay === rules.startValue  || mode === 'settings'}
+                        disabled={numOfDisplay === rules.startValue || mode === 'settings'}
                     />
                 </div>
             </div>

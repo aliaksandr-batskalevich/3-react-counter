@@ -47,8 +47,15 @@
 }
 
 .messageOnDisplay {
-    color: red;
     font-size: 22px;
+}
+
+.error {
+    color: red;
+}
+
+.errorInput {
+    border: red solid 2px;
 }
 
 .buttonWrapper {

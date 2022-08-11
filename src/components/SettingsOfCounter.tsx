@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import s from "./Counter.module.css";
 import {modeType, rulesType} from "../App";
 import {ButtonForCounter} from "./ButtonForCounter";
@@ -6,13 +6,41 @@ import {ButtonForCounter} from "./ButtonForCounter";
 type SettingsOfCounterPropsType = {
     mode: modeType
     rules: rulesType
+    error: boolean
+    setErrorCallBack: (error: boolean) => void
     modeCallBack: (newMode: modeType) => void
     rulesCallBack: (newStart: number, newMax: number) => void
 }
 
-export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({mode, rules, modeCallBack, rulesCallBack}) => {
+export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({
+                                                                            mode,
+                                                                            rules,
+                                                                            error,
+                                                                            setErrorCallBack,
+                                                                            modeCallBack,
+                                                                            rulesCallBack
+                                                                        }) => {
     let [maxValue, setMaxValue] = useState<number>(rules.maxValue);
     let [startValue, setStartValue] = useState<number>(rules.startValue);
+
+    useEffect(() => {
+        setMaxValue(rules.maxValue);
+        setStartValue(rules.startValue);
+    }, [rules]);
+
+    const errorTest = () => {
+        if (startValue < 0
+            || maxValue > 20
+            || maxValue <= startValue) {
+            setErrorCallBack(true);
+        } else {
+            setErrorCallBack(false);
+        }
+    };
+
+    useEffect(() => {
+        errorTest()
+    }, [startValue, maxValue]);
 
     const onClickModeHandler = (newMode: modeType) => {
         modeCallBack(newMode);
@@ -28,6 +56,8 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({mode, r
         onClickModeHandler('counter');
     }
 
+    let styleForInput = error ? s.errorInput : '';
+
     return (
         <div className={s.counterOutWrapper}>
             <div className={s.counterInWrapper}>
@@ -35,6 +65,7 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({mode, r
                     <div className={s.maxValueWrapper}>
                         <span className={s.legend}>max value</span>
                         <input
+                            className={styleForInput}
                             value={maxValue}
                             type="number"
                             onClick={() => onClickModeHandler("settings")}
@@ -44,6 +75,7 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({mode, r
                     <div className={s.startValueWrapper}>
                         <span className={s.legend}>start value</span>
                         <input
+                            className={styleForInput}
                             value={startValue}
                             type="number"
                             onClick={() => onClickModeHandler("settings")}
@@ -56,7 +88,7 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({mode, r
                     <ButtonForCounter
                         title={'SET'}
                         callBack={setSettingsHandler}
-                        disabled={mode === "counter"}/>
+                        disabled={mode === "counter" || error}/>
                 </div>
             </div>
         </div>
