@@ -29,9 +29,7 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({
     }, [rules]);
 
     const errorTest = () => {
-        if (startValue < 0
-            || maxValue > 20
-            || maxValue <= startValue) {
+        if (startValue < 0 || maxValue <= startValue) {
             setErrorCallBack(true);
         } else {
             setErrorCallBack(false);
