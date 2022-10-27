@@ -91,4 +91,4 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({
             </div>
         </div>
     )
-}
+};
