@@ -1,11 +1,11 @@
 import React from "react";
 import s from './Counter.module.css'
 import {ButtonForCounter} from "./ButtonForCounter";
-import {modeType, rulesType} from "../App";
+import {ModeType, RulesType} from "../store/counterReducer";
 
 type CounterPropsType = {
-    mode: modeType
-    rules: rulesType
+    mode: ModeType
+    rules: RulesType
     numOfDisplay: number
     error: boolean
     incrementCallBack: () => void
@@ -29,6 +29,11 @@ export const Counter: React.FC<CounterPropsType> = ({
                 ? `${s.display} ${s.messageOnDisplay} ${s.error}`
                 : `${s.display} ${s.messageOnDisplay}`;
 
+    const incrementCallBackHandler = () => {
+        incrementCallBack();
+        console.log(rules);
+    }
+
     return (
         <div className={s.counterOutWrapper}>
             <div className={s.counterInWrapper}>
@@ -44,7 +49,7 @@ export const Counter: React.FC<CounterPropsType> = ({
                 <div className={s.buttonWrapper}>
                     <ButtonForCounter
                         title={'INC'}
-                        callBack={incrementCallBack}
+                        callBack={incrementCallBackHandler}
                         disabled={numOfDisplay >= rules.maxValue || mode === 'settings'}
                     />
                     <ButtonForCounter

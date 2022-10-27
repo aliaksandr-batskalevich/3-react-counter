@@ -1,14 +1,14 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import s from "./Counter.module.css";
-import {modeType, rulesType} from "../App";
 import {ButtonForCounter} from "./ButtonForCounter";
+import {ModeType, RulesType} from "../store/counterReducer";
 
 type SettingsOfCounterPropsType = {
-    mode: modeType
-    rules: rulesType
+    mode: ModeType
+    rules: RulesType
     error: boolean
     setErrorCallBack: (error: boolean) => void
-    modeCallBack: (newMode: modeType) => void
+    modeCallBack: (newMode: ModeType) => void
     rulesCallBack: (newStart: number, newMax: number) => void
 }
 
@@ -42,7 +42,7 @@ export const SettingsOfCounter: React.FC<SettingsOfCounterPropsType> = ({
         errorTest()
     }, [startValue, maxValue]);
 
-    const onClickModeHandler = (newMode: modeType) => {
+    const onClickModeHandler = (newMode: ModeType) => {
         modeCallBack(newMode);
     }
     const onChangeInputMaxHandler = (event: ChangeEvent<HTMLInputElement>) => {

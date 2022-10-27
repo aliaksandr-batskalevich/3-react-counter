@@ -1,62 +1,61 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Counter} from "./components/Counter";
 import {SettingsOfCounter} from "./components/SettingsOfCounter";
 import s from './components/Counter.module.css'
-
-export type rulesType ={
-    startValue: number
-    maxValue: number
-}
-export type modeType = 'settings' | 'counter'
-
-let startRules: rulesType = {
-    startValue: 0,
-    maxValue: 5
-};
+import {useDispatch, useSelector} from "react-redux";
+import {CounterStateType} from "./store/store";
+import {
+    increment,
+    InitializeStateType,
+    ModeType,
+    setNumOfDisplay,
+    setError,
+    setMode,
+    setRules, RulesType
+} from "./store/counterReducer";
 
 export const App = () => {
 
-    let [rules, setRules] = useState<rulesType>(startRules);
-    let [mode, setMode] = useState<modeType>("counter");
-    let [numOfDisplay, setNumOfDisplay] = useState<number>(rules.startValue);
-    let [error, setError] = useState<boolean>(false);
+    const {
+        mode,
+        numOfDisplay,
+        rules,
+        error
+    } = useSelector<CounterStateType, InitializeStateType>(state => state.counterData);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        let counterFromLocalStorage: string | null = localStorage.getItem("numOfCounter");
-        if (counterFromLocalStorage) {
-            setNumOfDisplay(JSON.parse(counterFromLocalStorage));
-        }
-        let modeFromLocalStorage: string | null = localStorage.getItem("modeOfCounter");
-        if (modeFromLocalStorage === 'settings' || modeFromLocalStorage === 'counter') {
-          setMode(modeFromLocalStorage);
-        }
-        let rulesFromLocalStorageInString: string | null = localStorage.getItem("rulesOfCounter");
-        if (rulesFromLocalStorageInString) {
-            let rulesFromLocalStorageInObj = JSON.parse(rulesFromLocalStorageInString);
-            setRules(rulesFromLocalStorageInObj);
+        let numOfDisplayFLS: string | null = localStorage.getItem('numOfDisplay');
+        let rulesFLS: string | null = localStorage.getItem('rules');
+
+        numOfDisplayFLS && dispatch(setNumOfDisplay(JSON.parse(numOfDisplayFLS)));
+        if (rulesFLS) {
+            let rulesFLSNew = JSON.parse(rulesFLS) as RulesType;
+            dispatch(setRules(rulesFLSNew.startValue, rulesFLSNew.maxValue));
         }
     }, []);
-    useEffect(() => {
-        localStorage.setItem('numOfCounter', JSON.stringify(numOfDisplay));
-        localStorage.setItem('modeOfCounter', mode);
-        localStorage.setItem('rulesOfCounter', JSON.stringify(rules));
-    }, [numOfDisplay, mode, rules]);
 
-    const increment = () => {
-        setNumOfDisplay(++numOfDisplay);
+    useEffect(() => {
+        localStorage.setItem('numOfDisplay', JSON.stringify(numOfDisplay));
+        localStorage.setItem('rules', JSON.stringify(rules));
+    }, [numOfDisplay, rules]);
+
+
+    const incrementHandler = () => {
+        dispatch(increment());
     };
-    const reset = (start: number = rules.startValue) => {
-        setNumOfDisplay(start);
+    const resetHandler = (start: number = rules.startValue) => {
+        dispatch(setNumOfDisplay(start));
     };
-    const modeCallBackHandler = (newMode: modeType) => {
-        setMode(newMode);
+    const modeCallBackHandler = (newMode: ModeType) => {
+        dispatch(setMode(newMode));
     };
     const rulesCallBackHandler = (newStart: number, newMax: number) => {
-        setRules({startValue: newStart, maxValue: newMax});
-        reset(newStart);
+        dispatch(setRules(newStart, newMax));
+        resetHandler(newStart);
     };
     const setErrorCallBackHandler = (error: boolean) => {
-        setError(error);
+        dispatch(setError(error));
     }
 
     return (
@@ -66,8 +65,8 @@ export const App = () => {
                 rules={rules}
                 numOfDisplay={numOfDisplay}
                 error={error}
-                incrementCallBack={increment}
-                resetCallBack={reset}
+                incrementCallBack={incrementHandler}
+                resetCallBack={resetHandler}
             />
             <SettingsOfCounter
                 mode={mode}
